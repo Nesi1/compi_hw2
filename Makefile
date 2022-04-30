@@ -8,3 +8,5 @@ clean:
 	rm -f lex.yy.c
 	rm -f parser.tab.*pp
 	rm -f hw2
+test:
+	sh tests/test.sh

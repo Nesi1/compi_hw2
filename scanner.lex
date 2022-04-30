@@ -10,8 +10,9 @@ num     [0]|([1-9][0-9]*)
 id	    [A-Za-z][A-Za-z0-9]*
 relop   ==|!=|<=|>=|<|>
 binop   \+|\-|\*|\/
-whitespace ([\t\n\r ])
-string  \"([^\n\r\"\\]|\\[rnt"\\])+\"
+whitespace  ([\t\n\r ])
+string                  \"([^\n\r\"\\]|\\[rnt"\\])+\"
+line_comment            \/\/[^\r\n]*[\r|\n|\r\n]?
 
 %%
 void        return VOID;
@@ -19,6 +20,7 @@ int         return INT;
 byte        return BYTE;
 b           return B; 
 bool        return BOOL;
+auto        return AUTO;
 and         return AND;
 or          return OR;
 not         return NOT;
@@ -42,6 +44,7 @@ continue    return CONTINUE;
 {id}        return ID;
 {num}       return NUM;
 {whitespace} ;
+{line_comment} ;
 {string}    return STRING;
 .           return YYUNDEF;
 

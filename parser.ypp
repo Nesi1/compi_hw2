@@ -10,6 +10,8 @@
     void yyerror(char const*);
 %}
 
+
+
 %token VOID
 %token INT
 %token BYTE
@@ -17,13 +19,13 @@
 %token BOOL
 %token AUTO
 %token AND
-%token OR
+%left OR
 %token NOT
 %token TRUE
 %token FALSE
 %token RETURN
-%token IF
-%token ELSE
+%nonassoc IF
+%nonassoc ELSE
 %token WHILE
 %token BREAK
 %token CONTINUE
@@ -34,11 +36,12 @@
 %token LBRACE
 %token RBRACE
 %token ASSIGN
-%token RELOP
+%left RELOP
 %token BINOP
 %token ID
 %token NUM
 %token STRING
+
 
 %%
 
@@ -59,7 +62,7 @@ FuncDecl :
 RetType :
         Type                                   {output::printProductionRule(5);}
     |   VOID                                   {output::printProductionRule(6);}
-;;
+;
 
 Formals :
         /*epsilon*/                             {output::printProductionRule(7);}
@@ -89,7 +92,7 @@ Statement :
     |   Call SC                                {output::printProductionRule(19);}
     |   RETURN SC                              {output::printProductionRule(20);}
     |   RETURN Exp SC                          {output::printProductionRule(21);}
-    |   IF LPAREN Exp RPAREN Statement         {output::printProductionRule(22);}
+    |   IF LPAREN Exp RPAREN Statement %prec IF{output::printProductionRule(22);}
     |   IF LPAREN Exp RPAREN 
                 Statement ELSE Statement       {output::printProductionRule(23);}
     |   WHILE LPAREN Exp RPAREN Statement      {output::printProductionRule(24);}

@@ -49,7 +49,7 @@ const std::string output::rules[] = {
     "Exp -> Exp AND Exp",
     "Exp -> Exp OR Exp",
     "Exp -> Exp RELOP Exp",
-    "Exp -> LPAREN Type RPAREN Exp"
+    "Exp -> LPAREN Type RPAREN Exp"//47
 };
 
 void output::printProductionRule(const int ruleno) {

@@ -1,15 +1,12 @@
 %{
     #include "output.hpp"
-
     #include<iostream>
     using namespace std;
-    
     extern char* yytext;
     extern int yylineno;
     int yylex();
     void yyerror(char const*);
 %}
-
 
 
 %token VOID
@@ -18,29 +15,38 @@
 %token B
 %token BOOL
 %token AUTO
-%token AND
-%left OR
-%token NOT
 %token TRUE
 %token FALSE
 %token RETURN
-%nonassoc IF
-%nonassoc ELSE
 %token WHILE
 %token BREAK
 %token CONTINUE
 %token SC
 %token COMMA
-%token LPAREN
-%token RPAREN
-%token LBRACE
-%token RBRACE
-%token ASSIGN
-%left RELOP
-%token BINOP
 %token ID
 %token NUM
 %token STRING
+
+%token RBRACE //assoc?
+%token LBRACE //assoc?
+%token LPAREN //assoc?
+%token RPAREN //assoc?
+
+%right ASSIGN
+%left OR
+%left AND
+%left RELOP_EQ /*new*/
+%left RELOP_SIZE /*new*/
+/* %left BINOP */
+%left BINOP_PLUSMINUS /*new*/
+%left BINOP_MULDIV /*new*/
+%nonassoc CAST_PREC
+%right NOT
+/* %precedence BINOP_PREC */
+
+%right IF
+%right ELSE /*if(x) if(y) x=3; else x=4; else x=6;*/
+
 
 
 %%
@@ -118,7 +124,9 @@ Type :
 
 Exp :
         LPAREN Exp RPAREN                      {output::printProductionRule(34);}
-    |   Exp BINOP Exp                          {output::printProductionRule(35);}
+    /* |   Exp BINOP Exp                       {output::printProductionRule(35);} */
+    |   Exp BINOP_MULDIV Exp                   {output::printProductionRule(35);}
+    |   Exp BINOP_PLUSMINUS Exp                {output::printProductionRule(35);}
     |   ID                                     {output::printProductionRule(36);}
     |   Call                                   {output::printProductionRule(37);}
     |   NUM                                    {output::printProductionRule(38);}
@@ -129,8 +137,10 @@ Exp :
     |   NOT Exp                                {output::printProductionRule(43);}
     |   Exp AND Exp                            {output::printProductionRule(44);}
     |   Exp OR Exp                             {output::printProductionRule(45);}
-    |   Exp RELOP Exp                          {output::printProductionRule(46);}
-    |   LPAREN Type RPAREN Exp                 {output::printProductionRule(47);}
+    /* |   Exp RELOP Exp                       {output::printProductionRule(46);} */
+    |   Exp RELOP_EQ Exp                       {output::printProductionRule(46);}
+    |   Exp RELOP_SIZE Exp                     {output::printProductionRule(46);}
+    |   LPAREN Type RPAREN Exp %prec CAST_PREC {output::printProductionRule(47);}
 ;
 
 %%

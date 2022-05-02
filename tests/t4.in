@@ -1,5 +1,5 @@
 void main(){
-    if(b){
+    if(ba){
         if(a){
             x=3;
         }

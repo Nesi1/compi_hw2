@@ -1,6 +1,7 @@
 %{
 #define YYSTYPE int
 #include "parser.tab.hpp"
+#include "output.hpp"
 %}
 
 %option noyywrap
@@ -8,10 +9,8 @@
 
 num     [0]|([1-9][0-9]*)
 id	    [A-Za-z][A-Za-z0-9]*
-/* relop   ==|!=|<=|>=|<|> */
 relop_eq ==|!=
 relop_size <=|>=|<|>
-/* binop   \+|\-|\*|\/ */
 binop_muldiv   \*|\/
 binop_plusminus   \+|\-
 whitespace  ([\t\n\r ])
@@ -52,6 +51,6 @@ continue            return CONTINUE;
 {whitespace}        ;
 {line_comment}      ;
 {string}            return STRING;
-.                   return YYUNDEF;
+.                   { output::errorLex(yylineno); exit(0);}
 
 %%

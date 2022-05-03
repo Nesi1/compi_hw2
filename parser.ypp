@@ -122,7 +122,6 @@ Type :
 
 Exp :
         LPAREN Exp RPAREN                      {output::printProductionRule(34);}
-    /* |   Exp BINOP Exp                       {output::printProductionRule(35);} */
     |   Exp BINOP_MULDIV Exp                   {output::printProductionRule(35);}
     |   Exp BINOP_PLUSMINUS Exp                {output::printProductionRule(35);}
     |   ID                                     {output::printProductionRule(36);}
@@ -135,7 +134,6 @@ Exp :
     |   NOT Exp                                {output::printProductionRule(43);}
     |   Exp AND Exp                            {output::printProductionRule(44);}
     |   Exp OR Exp                             {output::printProductionRule(45);}
-    /* |   Exp RELOP Exp                       {output::printProductionRule(46);} */
     |   Exp RELOP_EQ Exp                       {output::printProductionRule(46);}
     |   Exp RELOP_SIZE Exp                     {output::printProductionRule(46);}
     |   LPAREN Type RPAREN Exp %prec CAST_PREC {output::printProductionRule(47);}
@@ -149,10 +147,5 @@ int main()
 }
 
 void yyerror(char const* s){
-    if (yychar == YYUNDEF){
-        output::errorLex(yylineno);
-    }
-    else{
-        output::errorSyn(yylineno);
-    }
+    output::errorSyn(yylineno);
 }

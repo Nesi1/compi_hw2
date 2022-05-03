@@ -1,6 +1,6 @@
 #!/bin/bash
 
-	for i in {1..2}
+	for i in {1..6}
 	do
 	./hw2 < tests/t${i}.in > new_out.txt
 	

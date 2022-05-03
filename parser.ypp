@@ -27,25 +27,23 @@
 %token NUM
 %token STRING
 
-%token RBRACE //assoc?
-%token LBRACE //assoc?
-%token LPAREN //assoc?
-%token RPAREN //assoc?
+%token RBRACE
+%token LBRACE
+%token LPAREN
+%token RPAREN
 
 %right ASSIGN
 %left OR
 %left AND
 %left RELOP_EQ /*new*/
 %left RELOP_SIZE /*new*/
-/* %left BINOP */
 %left BINOP_PLUSMINUS /*new*/
 %left BINOP_MULDIV /*new*/
 %nonassoc CAST_PREC
 %right NOT
-/* %precedence BINOP_PREC */
 
 %right IF
-%right ELSE /*if(x) if(y) x=3; else x=4; else x=6;*/
+%right ELSE 
 
 
 

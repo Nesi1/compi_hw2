@@ -1,0 +1,4 @@
+void main(){
+    if ( true and false or true and false)
+        return 0;
+}
